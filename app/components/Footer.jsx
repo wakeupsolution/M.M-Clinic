@@ -35,7 +35,7 @@ const Footer = () => {
     className="h-14 w-auto"
   />
 </div>
-            <p className="text-teal-100/70 leading-relaxed max-w-sm">
+            <p className="text-teal-100/70 leading-relaxed max-w-sm"> 
               Providing holistic, multi-disciplinary healthcare services. Integrating Ayurveda, Homoeopathy, Yoga Therapy, and modern medicine for complete patient wellness.
             </p>
             
