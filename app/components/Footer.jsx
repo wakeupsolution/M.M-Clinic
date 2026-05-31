@@ -28,18 +28,13 @@ const Footer = () => {
           {/* Column 1: Brand Info */}
           <div className="lg:col-span-5 flex flex-col space-y-6">
             {/* Logo area */}
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#14b8a6] to-[#0d9488] rounded-xl flex items-center justify-center shadow-lg shadow-teal-500/30 p-2">
-                 <img src="/detail/caduceus-logo.png" alt="MM Clinic" className="w-full h-full object-contain filter brightness-0 invert" onError={(e) => e.target.style.display = 'none'} />
-                 {/* Fallback if image is missing */}
-                 <svg className="w-8 h-8 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                 </svg>
-              </div>
-              <span className="text-2xl font-bold tracking-wide text-white">
-                MM<span className="text-[#f97316]">CLINIC</span>
-              </span>
-            </div>
+            <div className="flex items-center">
+  <img
+    src="/medskylogo.png"
+    alt="MM Clinic Logo"
+    className="h-14 w-auto"
+  />
+</div>
             <p className="text-teal-100/70 leading-relaxed max-w-sm">
               Providing holistic, multi-disciplinary healthcare services. Integrating Ayurveda, Homoeopathy, Yoga Therapy, and modern medicine for complete patient wellness.
             </p>

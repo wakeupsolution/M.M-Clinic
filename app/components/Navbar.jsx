@@ -26,7 +26,7 @@ const Navbar = () => {
     <nav 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         isScrolled 
-        ? "py-4 bg-[#1ea4ff] shadow-lg" // Solid color when scrolled
+        ? "py-4 bg-[#f97316] shadow-lg" // Solid color when scrolled
         : "py-6 bg-transparent" // Transparent at top
       }`}
     >
@@ -40,7 +40,7 @@ const Navbar = () => {
               <img 
                 src="/medskylogo.png" 
                 alt="Company Logo" 
-                className="h-10 md:h-12 w-auto object-contain"
+                className="h-10 md:h-18 w-auto object-contain"
               />
             </Link>
           </div>
@@ -87,7 +87,7 @@ const Navbar = () => {
           isMobileMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="bg-[#1ea4ff] border-t border-white/10 px-6 py-6 space-y-4 shadow-2xl">
+        <div className="bg-[#f97316] border-t border-white/10 px-6 py-6 space-y-4 shadow-2xl">
           {navLinks.map((link) => (
             <Link
               key={link.name}

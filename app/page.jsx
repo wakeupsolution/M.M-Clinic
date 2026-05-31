@@ -58,7 +58,6 @@ const Hero = () => {
     }
   ];
 
-  // Data for Section 4
   const clinicServices = [
     {
       title: "Primary Consultations",
@@ -112,20 +111,42 @@ const Hero = () => {
   return (
     <>
       <style>{`
-        /* Global Animations */
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-          100% { transform: translateY(0px); }
-        }
-        .animate-float { animation: float 6s ease-in-out infinite; }
+        /* -------------------------------------
+           CORE 3D & PERSPECTIVE UTILITIES 
+           ------------------------------------- */
+        .perspective-container { perspective: 1200px; }
+        .preserve-3d { transform-style: preserve-3d; }
         
-        @keyframes float-slow {
-          0% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-30px) rotate(5deg); }
-          100% { transform: translateY(0px) rotate(0deg); }
+        /* 3D Card Hover - Tilts on X and Y axes */
+        .card-3d-hover {
+          transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s ease;
+          transform-style: preserve-3d;
         }
-        .animate-float-slow { animation: float-slow 10s ease-in-out infinite; }
+        .card-3d-hover:hover {
+          transform: rotateY(8deg) rotateX(6deg) translateY(-10px);
+          box-shadow: -20px 25px 50px rgba(13, 148, 136, 0.15);
+        }
+        
+        /* Element popping out of the 3D card */
+        .pop-out-3d {
+          transform: translateZ(40px);
+          transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .card-3d-hover:hover .pop-out-3d {
+          transform: translateZ(70px) scale(1.05);
+        }
+
+        /* -------------------------------------
+           ANIMATIONS 
+           ------------------------------------- */
+        /* Hero 3D Float with Axis Rotation */
+        @keyframes float3D {
+          0% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+          33% { transform: translateY(-15px) rotateX(4deg) rotateY(-4deg); }
+          66% { transform: translateY(5px) rotateX(-2deg) rotateY(2deg); }
+          100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+        }
+        .animate-float-3d { animation: float3D 8s ease-in-out infinite; transform-style: preserve-3d; }
 
         @keyframes fadeInUpCard {
           from { opacity: 0; transform: translateY(40px) scale(0.95); }
@@ -134,58 +155,72 @@ const Hero = () => {
         .animate-card { animation: fadeInUpCard 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
         
         @keyframes slideInLeft {
-          from { opacity: 0; transform: translateX(-50px); }
-          to { opacity: 1; transform: translateX(0); }
+          from { opacity: 0; transform: translateX(-50px) rotateY(-10deg); }
+          to { opacity: 1; transform: translateX(0) rotateY(0); }
         }
-        .animate-slide-left { animation: slideInLeft 1s ease-out forwards; }
+        .animate-slide-left { animation: slideInLeft 1s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
         
         @keyframes fadeInUp {
           from { opacity: 0; transform: translateY(30px); }
           to { opacity: 1; transform: translateY(0); }
         }
         .animate-reveal { animation: fadeInUp 0.8s ease-out forwards; }
-        
-        @keyframes pulse-custom {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.05); }
-        }
-        .pulse-soft { animation: pulse-custom 3s infinite; }
 
         /* Staggered List Item Animation */
         @keyframes slideInRightFade {
-          from { opacity: 0; transform: translateX(20px); }
-          to { opacity: 1; transform: translateX(0); }
+          from { opacity: 0; transform: translateX(20px) translateZ(-20px); }
+          to { opacity: 1; transform: translateX(0) translateZ(0); }
         }
         .animate-list-item { animation: slideInRightFade 0.5s ease-out forwards; opacity: 0; }
+
+        /* Medical Background Animations */
+        @keyframes ecgSlide {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-ecg { animation: ecgSlide 8s linear infinite; width: 200%; }
+
+        @keyframes panGrid {
+          0% { background-position: 0px 0px; }
+          100% { background-position: 40px 40px; }
+        }
+        .animate-grid { animation: panGrid 4s linear infinite; }
+
+        .glass-card {
+          background: rgba(255, 255, 255, 0.75);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid rgba(255, 255, 255, 0.6);
+        }
       `}</style>
 
       {/* SECTION 1: HERO */}
-      <section className="relative w-full min-h-screen flex items-center pt-32 pb-40 overflow-hidden bg-gradient-to-br from-[#14b8a6] via-[#0d9488] to-[#0f766e] font-sans">
+      <section className="relative w-full min-h-screen flex items-center pt-32 pb-40 overflow-hidden bg-gradient-to-br from-[#14b8a6] via-[#0d9488] to-[#0f766e] font-sans perspective-container">
         
-        {/* Background Concentric Circles */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-          <div className="absolute -top-[30%] -left-[10%] w-[1000px] h-[1000px] rounded-full bg-white opacity-[0.04]"></div>
-          <div className="absolute -top-[15%] -left-[5%] w-[800px] h-[800px] rounded-full bg-white opacity-[0.04]"></div>
-          <div className="absolute top-[0%] left-[0%] w-[600px] h-[600px] rounded-full bg-white opacity-[0.04]"></div>
+        {/* Background Concentric Circles - With 3D Z-Depth */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none preserve-3d">
+          <div className="absolute -top-[30%] -left-[10%] w-[1000px] h-[1000px] rounded-full bg-white opacity-[0.04] transform translateZ(-100px)"></div>
+          <div className="absolute -top-[15%] -left-[5%] w-[800px] h-[800px] rounded-full bg-white opacity-[0.04] transform translateZ(-50px)"></div>
+          <div className="absolute top-[0%] left-[0%] w-[600px] h-[600px] rounded-full bg-white opacity-[0.04] transform translateZ(-20px)"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-20 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="flex flex-col space-y-6 text-center lg:text-left">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-orange-500/20 border border-orange-400 text-orange-100 font-bold text-sm uppercase tracking-widest mb-2 w-max mx-auto lg:mx-0">
+            <div className="flex flex-col space-y-6 text-center lg:text-left preserve-3d">
+              <div className="inline-block px-4 py-1.5 rounded-full bg-orange-500/20 border border-orange-400 text-orange-100 font-bold text-sm uppercase tracking-widest mb-2 w-max mx-auto lg:mx-0 shadow-[0_0_15px_rgba(249,115,22,0.3)]">
                 Govt. Reg No. 0185/A
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-[56px] font-bold text-white leading-[1.1] tracking-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-[56px] font-bold text-white leading-[1.1] tracking-tight drop-shadow-lg">
                 Welcome to <span className="text-[#f97316]">MM CLINIC</span> <br />
                 <span className="font-light text-white/90 text-3xl md:text-4xl mt-2 block">Compassionate Healthcare</span>
               </h1>
-              <p className="text-base md:text-[17px] text-white/90 max-w-lg mx-auto lg:mx-0 leading-relaxed pt-2">
+              <p className="text-base md:text-[17px] text-white/90 max-w-lg mx-auto lg:mx-0 leading-relaxed pt-2 drop-shadow-md">
                 Led by LION. Dr. R. Swaminathan, a multi-disciplinary Govt. Registered Medical Practitioner offering holistic treatments integrating Allopathy, Ayurveda, Homoeopathy, and Yoga Therapy.
               </p>
               <div className="pt-4 flex justify-center lg:justify-start gap-4">
                 <Link 
                   href="tel:+919444796479" 
-                  className="inline-flex items-center gap-3 bg-[#f97316] text-white px-8 py-3.5 rounded-md font-bold text-[14px] uppercase tracking-wider shadow-lg hover:shadow-2xl hover:bg-[#ea580c] transition-all duration-300"
+                  className="inline-flex items-center gap-3 bg-[#f97316] text-white px-8 py-3.5 rounded-md font-bold text-[14px] uppercase tracking-wider shadow-[0_10px_20px_rgba(249,115,22,0.4)] hover:shadow-[0_15px_30px_rgba(249,115,22,0.6)] hover:-translate-y-1 hover:bg-[#ea580c] transition-all duration-300"
                 >
                   Call +91 94447 96479
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
@@ -195,11 +230,11 @@ const Hero = () => {
               </div>
             </div>
 
-            <div className="relative w-full flex justify-center lg:justify-end mt-10 lg:mt-0">
-              <div className="relative w-full max-w-sm lg:max-w-md animate-float">
-                {/* Replace src with the doctor's portrait image uploaded */}
-                <div className="rounded-2xl overflow-hidden border-4 border-white/20 shadow-2xl relative bg-white">
-                   <div className="absolute top-4 left-4 bg-white p-2 rounded-full shadow-lg z-10">
+            {/* 3D Floating Hero Image */}
+            <div className="relative w-full flex justify-center lg:justify-end mt-10 lg:mt-0 perspective-container">
+              <div className="relative w-full max-w-sm lg:max-w-md animate-float-3d">
+                <div className="rounded-2xl overflow-hidden border-4 border-white/20 shadow-[0_30px_60px_rgba(0,0,0,0.3)] relative bg-white transform-gpu">
+                   <div className="absolute top-4 left-4 bg-white p-2 rounded-full shadow-lg z-10 pop-out-3d">
                       <img src="/detail/caduceus-logo.png" alt="Medical Logo" className="w-10 h-10 object-contain" onError={(e) => e.target.style.display = 'none'} />
                    </div>
                    <img 
@@ -222,18 +257,15 @@ const Hero = () => {
       </section>
 
       {/* SECTION 2: STORY ABOUT US */}
-      <section className="relative bg-white py-24 lg:py-32 overflow-hidden">
-        {/* Animated Background Blobs */}
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-teal-50 rounded-full blur-3xl opacity-70 animate-pulse z-0"></div>
-        <div className="absolute top-10 right-10 w-64 h-64 bg-orange-50 rounded-full blur-2xl z-0"></div>
+      <section className="relative bg-white py-24 lg:py-32 overflow-hidden perspective-container">
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-teal-50 rounded-full blur-3xl opacity-70 animate-pulse z-0 transform translateZ(-150px)"></div>
+        <div className="absolute top-10 right-10 w-64 h-64 bg-orange-50 rounded-full blur-2xl z-0 transform translateZ(-150px)"></div>
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
-            {/* LEFT SIDE: Image Representation */}
-            <div className={`relative ${isVisible ? 'animate-slide-left' : 'opacity-0'}`}>
-              <div className="relative z-10 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] overflow-hidden border border-gray-100 transition-transform duration-500 hover:scale-[1.02]">
-                {/* Replace with clinic front or interior image */}
+            <div className={`relative ${isVisible ? 'animate-slide-left' : 'opacity-0'} preserve-3d`}>
+              <div className="relative z-10 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] overflow-hidden border border-gray-100 transition-transform duration-700 hover:rotate-y-2 hover:scale-[1.02]">
                 <img 
                   src="/detail/clinic-interior.jpg" 
                   alt="MM Clinic Interior" 
@@ -248,15 +280,14 @@ const Hero = () => {
                 </div>
               </div>
               
-              {/* Secondary overlapping card with Floating Effect */}
-              <div className="absolute -bottom-10 -right-4 lg:-right-10 z-20 w-1/2 bg-white rounded-xl shadow-2xl border border-gray-50 p-6 animate-bounce [animation-duration:5s] flex flex-col items-center text-center">
+              {/* Floating Badge with 3D offset */}
+              <div className="absolute -bottom-10 -right-4 lg:-right-10 z-20 w-1/2 bg-white rounded-xl shadow-2xl border border-gray-50 p-6 flex flex-col items-center text-center transform translateZ(50px) animate-bounce [animation-duration:5s]">
                  <h4 className="font-bold text-teal-800 text-lg">Govt. Registered</h4>
                  <p className="text-sm text-gray-500">Reg No. 0185/A</p>
                  <div className="mt-3 w-12 h-1 bg-orange-500 rounded-full"></div>
               </div>
             </div>
 
-            {/* RIGHT SIDE: Content with Staggered Reveal */}
             <div className="flex flex-col space-y-8">
               <div className={`${isVisible ? 'animate-reveal' : 'opacity-0'} [animation-delay:200ms]`}>
                 <h4 className="text-[#0d9488] font-bold text-sm uppercase tracking-widest mb-3">
@@ -271,11 +302,10 @@ const Hero = () => {
                 </p>
               </div>
 
-              {/* Feature List */}
               <div className="space-y-6">
                 <div className={`flex gap-5 transition-all duration-500 hover:translate-x-2 ${isVisible ? 'animate-reveal' : 'opacity-0'} [animation-delay:400ms]`}>
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 rounded-xl bg-[#0d9488] flex items-center justify-center text-white shadow-lg shadow-teal-500/30 pulse-soft">
+                    <div className="w-12 h-12 rounded-xl bg-[#0d9488] flex items-center justify-center text-white shadow-lg shadow-teal-500/30">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -291,7 +321,7 @@ const Hero = () => {
 
                 <div className={`flex gap-5 transition-all duration-500 hover:translate-x-2 ${isVisible ? 'animate-reveal' : 'opacity-0'} [animation-delay:600ms]`}>
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 rounded-xl bg-[#f97316] flex items-center justify-center text-white shadow-lg shadow-orange-500/30 pulse-soft">
+                    <div className="w-12 h-12 rounded-xl bg-[#f97316] flex items-center justify-center text-white shadow-lg shadow-orange-500/30">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
@@ -306,7 +336,6 @@ const Hero = () => {
                 </div>
               </div>
 
-              {/* Trust Statement */}
               <div className={`pt-4 border-t border-gray-100 ${isVisible ? 'animate-reveal' : 'opacity-0'} [animation-delay:800ms]`}>
                 <p className="italic text-gray-400 text-sm">
                   "Healing communities through trusted knowledge and compassionate care."
@@ -317,8 +346,8 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* SECTION 3: OUR FEATURES / WHO WE SERVE */}
-      <section className="relative py-24 lg:py-32 bg-gray-50 overflow-hidden font-sans">
+      {/* SECTION 3: OUR FEATURES (3D Hover Cards) */}
+      <section className="relative py-24 lg:py-32 bg-gray-50 overflow-hidden font-sans perspective-container">
         <div className="absolute inset-0 z-0 opacity-40 pointer-events-none" 
               style={{ backgroundImage: 'radial-gradient(#d1d5db 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
         </div>
@@ -334,26 +363,30 @@ const Hero = () => {
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-16">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-16 perspective-container">
             {features.map((feature, index) => (
               <div 
                 key={index} 
-                className={`group w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] flex flex-col items-center text-center p-8 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-[0_20px_50px_rgba(13,148,136,0.1)] hover:-translate-y-2 transition-all duration-500 animate-card`}
+                className={`group w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] flex flex-col items-center text-center p-8 rounded-2xl bg-white border border-gray-100 animate-card card-3d-hover`}
                 style={{ animationDelay: `${index * 150}ms` }}
               >
-                <div className="relative w-28 h-28 mb-8 flex items-center justify-center">
-                  <div className="absolute inset-0 bg-teal-50 rounded-3xl transform rotate-12 group-hover:rotate-45 group-hover:scale-110 transition-transform duration-500"></div>
-                  <div className="absolute inset-2 bg-white rounded-2xl shadow-sm border border-teal-50/50"></div>
-                  <div className="relative z-10 transform group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
+                {/* 3D Pop-out Icon Container */}
+                <div className="relative w-28 h-28 mb-8 flex items-center justify-center pop-out-3d">
+                  <div className="absolute inset-0 bg-teal-50 rounded-3xl transform rotate-12 group-hover:rotate-45 group-hover:bg-teal-100 transition-all duration-500 shadow-inner"></div>
+                  <div className="absolute inset-2 bg-white rounded-2xl shadow-md border border-teal-50/50"></div>
+                  <div className="relative z-10 transform group-hover:scale-110 transition-transform duration-300">
                     {feature.icon}
                   </div>
                 </div>
-                <h3 className="text-2xl font-semibold text-gray-800 mb-4 group-hover:text-[#0d9488] transition-colors duration-300">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-500 leading-relaxed">
-                  {feature.desc}
-                </p>
+                
+                <div className="pop-out-3d">
+                  <h3 className="text-2xl font-semibold text-gray-800 mb-4 group-hover:text-[#0d9488] transition-colors duration-300">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-500 leading-relaxed">
+                    {feature.desc}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -361,129 +394,50 @@ const Hero = () => {
       </section>
 
       {/* SECTION 4: CORE MODULES (CLINIC CAPABILITIES) */}
-      <section className="relative py-24 lg:py-32 bg-[#f4fbfb] overflow-hidden font-sans">
-        
-        {/* CSS for Medical Advanced Animations */}
-        <style>{`
-          @keyframes ecgSlide {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-          .animate-ecg {
-            animation: ecgSlide 8s linear infinite;
-            width: 200%;
-          }
-
-          @keyframes floatMedical {
-            0% { transform: translateY(120vh) rotate(0deg) scale(0.5); opacity: 0; }
-            10% { opacity: 0.15; }
-            90% { opacity: 0.15; }
-            100% { transform: translateY(-20vh) rotate(180deg) scale(1.2); opacity: 0; }
-          }
-          .animate-float-medical { animation: floatMedical 20s linear infinite; }
-
-          @keyframes softPulse {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.05); }
-          }
-          .animate-soft-pulse { animation: softPulse 4s ease-in-out infinite; }
-          
-          @keyframes panGrid {
-            0% { background-position: 0px 0px; }
-            100% { background-position: 40px 40px; }
-          }
-          .animate-grid { animation: panGrid 4s linear infinite; }
-
-          @keyframes shimmerBorder {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-          }
-
-          .glass-card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-          }
-
-          .hover-gradient-border::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 1.5rem;
-            padding: 2px;
-            background: linear-gradient(135deg, #14b8a6, #0d9488, #14b8a6);
-            background-size: 200% 200%;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            animation: shimmerBorder 3s linear infinite;
-          }
-          .group:hover .hover-gradient-border::before { opacity: 1; }
-        `}</style>
-
+      <section className="relative py-24 lg:py-32 bg-[#f4fbfb] overflow-hidden font-sans perspective-container">
         {/* Dynamic Medical Animated Background */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none preserve-3d">
           <div className="absolute inset-0 opacity-[0.15] animate-grid" style={{ backgroundImage: 'linear-gradient(to right, #0d9488 1px, transparent 1px), linear-gradient(to bottom, #0d9488 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-tr from-[#14b8a6]/20 to-[#0d9488]/5 blur-[100px] rounded-full animate-soft-pulse"></div>
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#f0fdfa] to-[#14b8a6]/10 blur-[100px] rounded-full animate-soft-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-tr from-[#14b8a6]/20 to-[#0d9488]/5 blur-[100px] rounded-full"></div>
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#f0fdfa] to-[#14b8a6]/10 blur-[100px] rounded-full"></div>
 
           {/* Continuous ECG Heartbeat Line SVG */}
-          <div className="absolute top-1/4 left-0 h-40 w-full opacity-10 flex animate-ecg text-[#f97316]">
+          <div className="absolute top-1/4 left-0 h-40 w-full opacity-[0.05] flex animate-ecg text-[#f97316] transform translateZ(-100px)">
             <svg viewBox="0 0 1000 100" className="h-full w-1/2 flex-shrink-0" preserveAspectRatio="none">
               <path d="M0,50 H200 L215,20 L240,90 L260,10 L280,70 L295,50 H500 L515,20 L540,90 L560,10 L580,70 L595,50 H800 L815,20 L840,90 L860,10 L880,70 L895,50 H1000" fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />
             </svg>
             <svg viewBox="0 0 1000 100" className="h-full w-1/2 flex-shrink-0" preserveAspectRatio="none">
               <path d="M0,50 H200 L215,20 L240,90 L260,10 L280,70 L295,50 H500 L515,20 L540,90 L560,10 L580,70 L595,50 H800 L815,20 L840,90 L860,10 L880,70 L895,50 H1000" fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />
             </svg>
-          </div>
-
-          {/* Floating Medical Crosses */}
-          <div className="absolute left-[10%] text-[#0d9488] animate-float-medical" style={{ animationDelay: '0s', animationDuration: '18s' }}>
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M19 10h-5V5a2 2 0 00-2-2h-1a2 2 0 00-2 2v5H5a2 2 0 00-2 2v1a2 2 0 002 2h5v5a2 2 0 002 2h1a2 2 0 002-2v-5h5a2 2 0 002-2v-1a2 2 0 00-2-2z"/></svg>
-          </div>
-          <div className="absolute left-[85%] text-[#14b8a6] animate-float-medical" style={{ animationDelay: '8s', animationDuration: '20s' }}>
-            <svg width="50" height="50" viewBox="0 0 24 24" fill="currentColor"><path d="M19 10h-5V5a2 2 0 00-2-2h-1a2 2 0 00-2 2v5H5a2 2 0 00-2 2v1a2 2 0 002 2h5v5a2 2 0 002 2h1a2 2 0 002-2v-5h5a2 2 0 002-2v-1a2 2 0 00-2-2z"/></svg>
           </div>
         </div>
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20 relative">
-            <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg shadow-teal-500/20 animate-bounce" style={{ animationDuration: '3s' }}>
-              <svg className="w-6 h-6 text-[#f97316]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </div>
-
             <h4 className="inline-block px-4 py-1.5 rounded-full bg-teal-50/80 border border-teal-100 text-[#0d9488] font-bold text-xs uppercase tracking-widest mb-4 shadow-sm backdrop-blur-sm">
               Healthcare Solutions
             </h4>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#222] mb-6 tracking-tight">
               Patient <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#14b8a6] to-[#0d9488] drop-shadow-sm">Programs</span>
             </h2>
-            <div className="w-24 h-1.5 bg-gradient-to-r from-[#14b8a6] to-[#0d9488] mx-auto mb-6 rounded-full relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-full bg-white/50 transform -translate-x-full animate-[shimmerBorder_2s_infinite]"></div>
-            </div>
+            <div className="w-24 h-1.5 bg-gradient-to-r from-[#14b8a6] to-[#0d9488] mx-auto mb-6 rounded-full"></div>
             <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
               Our clinic focuses on complete wellness. We provide thorough diagnostic assessments and treatments across multiple branches of medicine.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 perspective-container">
             {clinicServices.map((service, mIndex) => (
               <div 
                 key={mIndex} 
-                className="group relative rounded-[1.5rem] p-8 lg:p-10 glass-card shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_rgba(13,148,136,0.12)] hover:-translate-y-3 transition-all duration-500"
+                className="group relative rounded-[1.5rem] p-8 lg:p-10 glass-card shadow-[0_8px_30px_rgba(0,0,0,0.04)] card-3d-hover overflow-hidden"
               >
-                <div className="hover-gradient-border z-0"></div>
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-[#14b8a6]/10 to-[#0d9488]/10 rounded-full blur-2xl group-hover:bg-[#0d9488]/20 transition-colors duration-500"></div>
+                {/* Accent glow on hover */}
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-[#14b8a6]/20 to-[#0d9488]/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
 
-                <div className="relative z-10">
+                <div className="relative z-10 pop-out-3d">
                   <div className="flex items-center gap-4 mb-8">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-white to-teal-50 shadow-inner flex items-center justify-center border border-teal-100 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-white to-teal-50 shadow-md flex items-center justify-center border border-teal-100 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500">
                       <span className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#14b8a6] to-[#0d9488]">
                         0{mIndex + 1}
                       </span>
@@ -497,7 +451,7 @@ const Hero = () => {
                     {service.items.map((item, iIndex) => (
                       <li 
                         key={iIndex} 
-                        className="flex items-start gap-4 p-3 rounded-xl hover:bg-teal-50/50 group/item cursor-default transition-all duration-300 transform hover:translate-x-2 animate-list-item"
+                        className="flex items-start gap-4 p-3 rounded-xl hover:bg-white/60 hover:shadow-sm group/item cursor-default transition-all duration-300 transform hover:translate-x-2 animate-list-item"
                         style={{ animationDelay: `${(mIndex * 150) + (iIndex * 80)}ms` }}
                       >
                         <div className="mt-0.5 relative flex-shrink-0 w-6 h-6 flex items-center justify-center">
@@ -520,7 +474,7 @@ const Hero = () => {
       </section>
 
       {/* SECTION 5: CONTACT INFORMATION */}
-      <section className="relative py-24 lg:py-32 bg-white overflow-hidden font-sans">
+      <section className="relative py-24 lg:py-32 bg-white overflow-hidden font-sans perspective-container">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -528,74 +482,77 @@ const Hero = () => {
             {/* LEFT COLUMN: Contact Details */}
             <div className="lg:col-span-7 flex flex-col space-y-12">
               
-              <div className="relative inline-flex animate-ribbon">
-                <div className="bg-[#0f766e] text-white px-8 py-4 rounded-r-xl shadow-lg relative z-10 flex items-center gap-3">
+              <div className="relative inline-flex">
+                <div className="bg-[#0f766e] text-white px-8 py-4 rounded-r-xl shadow-lg relative z-10 flex items-center gap-3 transform hover:translate-x-2 transition-transform duration-300">
                   <div className="w-2 h-8 bg-[#f97316] rounded-full"></div>
                   <h2 className="text-3xl font-bold tracking-wide">Visit MM Clinic</h2>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 perspective-container">
                 
-                {/* Location Box */}
-                <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-teal-100 shadow-[0_10px_30px_rgba(13,148,136,0.05)] hover:shadow-[0_15px_40px_rgba(13,148,136,0.1)] transition-all duration-300">
-                  <h3 className="text-xl font-bold text-[#0d9488] mb-5 border-b border-gray-100 pb-3">
-                    Location
-                  </h3>
-                  <div className="flex items-start gap-4">
-                     <svg className="w-8 h-8 text-orange-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                     </svg>
-                     <p className="text-gray-700 leading-relaxed font-medium">
-                        No.2, Kannadhasan Nagar, <br />
-                        Nehru Bazzar, <br />
-                        UTHUKOTTAI - 602026. <br />
-                        <span className="text-sm text-gray-500 block mt-1">(Maharaja Jewellery Backside)</span>
-                     </p>
+                {/* Location Box - 3D Hover */}
+                <div className="bg-white p-6 rounded-2xl border border-teal-100 shadow-[0_10px_30px_rgba(13,148,136,0.05)] card-3d-hover">
+                  <div className="pop-out-3d">
+                    <h3 className="text-xl font-bold text-[#0d9488] mb-5 border-b border-gray-100 pb-3">
+                      Location
+                    </h3>
+                    <div className="flex items-start gap-4">
+                        <svg className="w-8 h-8 text-orange-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                        </svg>
+                        <p className="text-gray-700 leading-relaxed font-medium">
+                          No.2, Kannadhasan Nagar, <br />
+                          Nehru Bazzar, <br />
+                          UTHUKOTTAI - 602026. <br />
+                          <span className="text-sm text-gray-500 block mt-1">(Maharaja Jewellery Backside)</span>
+                        </p>
+                    </div>
                   </div>
                 </div>
 
-                {/* Contact Box */}
-                <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-orange-100 shadow-[0_10px_30px_rgba(249,115,22,0.05)] hover:shadow-[0_15px_40px_rgba(249,115,22,0.1)] transition-all duration-300">
-                  <h3 className="text-xl font-bold text-[#f97316] mb-5 border-b border-gray-100 pb-3">
-                    Get in Touch
-                  </h3>
-                  <ul className="space-y-4">
-                     <li className="flex items-center gap-4">
-                        <svg className="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                           <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
-                        </svg>
-                        <a href="tel:+919444796479" className="text-gray-800 font-bold hover:text-teal-600 transition-colors">+91 94447 96479</a>
-                     </li>
-                     <li className="flex items-center gap-4">
-                        <svg className="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                           <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                        </svg>
-                        <a href="mailto:drswami1981@gmail.com" className="text-gray-800 font-medium hover:text-teal-600 transition-colors">drswami1981@gmail.com</a>
-                     </li>
-                  </ul>
+                {/* Contact Box - 3D Hover */}
+                <div className="bg-white p-6 rounded-2xl border border-orange-100 shadow-[0_10px_30px_rgba(249,115,22,0.05)] card-3d-hover">
+                  <div className="pop-out-3d">
+                    <h3 className="text-xl font-bold text-[#f97316] mb-5 border-b border-gray-100 pb-3">
+                      Get in Touch
+                    </h3>
+                    <ul className="space-y-4">
+                        <li className="flex items-center gap-4">
+                          <svg className="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+                          </svg>
+                          <a href="tel:+919444796479" className="text-gray-800 font-bold hover:text-teal-600 transition-colors">+91 94447 96479</a>
+                        </li>
+                        <li className="flex items-center gap-4">
+                          <svg className="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                          </svg>
+                          <a href="mailto:drswami1981@gmail.com" className="text-gray-800 font-medium hover:text-teal-600 transition-colors">drswami1981@gmail.com</a>
+                        </li>
+                    </ul>
+                  </div>
                 </div>
 
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Map Placeholder or Clinic Identity Graphic */}
-            <div className="lg:col-span-5 relative h-full flex justify-center items-center mt-12 lg:mt-0">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-tr from-teal-400/30 to-orange-400/20 blur-[80px] rounded-full animate-pulse-soft z-0"></div>
+            {/* RIGHT COLUMN: Clinic Identity Graphic - 3D Hover & Float */}
+            <div className="lg:col-span-5 relative h-full flex justify-center items-center mt-12 lg:mt-0 perspective-container">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-tr from-teal-400/30 to-orange-400/20 blur-[80px] rounded-full z-0"></div>
               
-              <div className="relative z-10 w-full max-w-md bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 text-center animate-float flex flex-col items-center">
-                 <div className="w-24 h-24 rounded-full bg-teal-50 border-4 border-teal-100 flex items-center justify-center mb-6">
-                    <img src="/detail/caduceus-logo.png" alt="MM Clinic Logo" className="w-16 h-16 object-contain" onError={(e) => e.target.style.display = 'none'} />
-                    <svg className="w-12 h-12 text-orange-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" />
-                    </svg>
+              <div className="relative z-10 w-full max-w-md bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 text-center animate-float-3d card-3d-hover flex flex-col items-center">
+                 <div className="pop-out-3d w-full flex flex-col items-center">
+                   <div className="w-24 h-24 rounded-full bg-teal-50 border-4 border-teal-100 flex items-center justify-center mb-6 shadow-inner">
+                      <img src="/detail/caduceus-logo.png" alt="MM Clinic Logo" className="w-16 h-16 object-contain" onError={(e) => e.target.style.display = 'none'} />
+                   </div>
+                   <h2 className="text-3xl font-bold text-teal-800 mb-2">MM CLINIC</h2>
+                   <p className="text-gray-500 mb-6">Healing with Care & Expertise</p>
+                   <a href="tel:+919444796479" className="w-full block bg-orange-500 text-white py-3 rounded-lg font-bold shadow-[0_8px_20px_rgba(249,115,22,0.3)] hover:bg-orange-600 transition-colors">
+                      Book an Appointment
+                   </a>
                  </div>
-                 <h2 className="text-3xl font-bold text-teal-800 mb-2">MM CLINIC</h2>
-                 <p className="text-gray-500 mb-6">Healing with Care & Expertise</p>
-                 <a href="tel:+919444796479" className="w-full block bg-orange-500 text-white py-3 rounded-lg font-bold shadow-md hover:bg-orange-600 transition-colors">
-                    Book an Appointment
-                 </a>
               </div>
             </div>
 
