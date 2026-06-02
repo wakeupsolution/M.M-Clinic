@@ -1,20 +1,18 @@
-import './globals.css';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import "./globals.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 export const metadata = {
-  title: 'M.M Clinic ',
-  description: 'hospital management system',
-}
+  title: "M.M Clinic in uthukottai -Wakeupsolution ",
+  description: "hospital management system",
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="antialiased">
         <Navbar />
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <main className="min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>
