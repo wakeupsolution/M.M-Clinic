@@ -173,7 +173,7 @@ const AboutUs = () => {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f97316] to-[#fdba74]">Body & Mind</span>
           </h1>
           <p className="max-w-2xl mx-auto text-lg md:text-xl text-teal-100 leading-relaxed animate-slide-up" style={{ animationDelay: '200ms' }}>
-            Led by LION. Dr. R. Swaminathan, MM Clinic integrates traditional wisdom with modern medical practices to provide ethical, effective, and patient-centered healthcare.
+            Led by LION. Dr. R. Swaminathan And dr.R.swaminathan, MM Clinic integrates traditional wisdom with modern medical practices to provide ethical, effective, and patient-centered healthcare.
           </p>
         </div>
 
