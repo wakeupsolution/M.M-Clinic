@@ -173,7 +173,7 @@ const AboutUs = () => {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f97316] to-[#fdba74]">Body & Mind</span>
           </h1>
           <p className="max-w-2xl mx-auto text-lg md:text-xl text-teal-100 leading-relaxed animate-slide-up" style={{ animationDelay: '200ms' }}>
-            Led by LION. Dr. R. srividhya And dr.R.swaminathan, MM Clinic integrates traditional wisdom with modern medical practices to provide ethical, effective, and patient-centered healthcare.
+            Led by LION. Dr. M srividhya And dr.R.swaminathan, MM Clinic integrates traditional wisdom with modern medical practices to provide ethical, effective, and patient-centered healthcare.
           </p>
         </div>
 
@@ -222,7 +222,7 @@ const AboutUs = () => {
                   Bridging the gap between <span className="text-[#f97316]">traditional wisdom</span> and <span className="text-[#0d9488]">modern medicine.</span>
                 </h2>
                 <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                  With degrees spanning B.Sc., B.A.M.S., PGDYT., D.Pharm., C.C.H., and LL.B., Dr. srividhya and swaminathan established MM Clinic to offer a truly multi-disciplinary approach to healing. We recognize that no two patients are exactly alike, and therefore, their treatments shouldn't be either.
+                  With degrees spanning B.Sc., B.A.M.S., PGDYT., D.Pharm., C.C.H., and LL.B., Dr.M srividhya and Dr.R swaminathan established MM Clinic to offer a truly multi-disciplinary approach to healing. We recognize that no two patients are exactly alike, and therefore, their treatments shouldn't be either.
                 </p>
                 <p className="text-gray-600 text-lg leading-relaxed">
                   Our goal is to accurately diagnose illnesses and utilize the most effective therapeutic pathway—whether that is allopathic medicine, ayurvedic remedies, homoeopathy, or yoga therapy—to ensure a swift and complete recovery.
@@ -449,7 +449,7 @@ const AboutUs = () => {
         <div className="relative z-10 text-center px-6">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Ready to start your healing journey?</h2>
           <p className="text-teal-100 text-lg md:text-xl max-w-2xl mx-auto mb-10">
-            Trust your health with Dr. srividhya and swaminathan and experience the benefits of integrative medical care today.
+            Trust your health with Dr.M srividhya and D.R swaminathan and experience the benefits of integrative medical care today.
           </p>
           <Link 
             href="/contact" 
