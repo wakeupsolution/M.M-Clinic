@@ -215,7 +215,7 @@ const Hero = () => {
                 <span className="font-light text-white/90 text-3xl md:text-4xl mt-2 block">Compassionate Healthcare</span>
               </h1>
               <p className="text-base md:text-[17px] text-white/90 max-w-lg mx-auto lg:mx-0 leading-relaxed pt-2 drop-shadow-md">
-                Led by LION. Dr. R. Swaminathan and Dr.R.swaminathan, a multi-disciplinary Govt. Registered Medical Practitioner offering holistic treatments integrating Allopathy, Ayurveda, Homoeopathy, and Yoga Therapy.
+                Led by LION. Dr. R. srividhya and Dr.R.swaminathan, a multi-disciplinary Govt. Registered Medical Practitioner offering holistic treatments integrating Allopathy, Ayurveda, Homoeopathy, and Yoga Therapy.
               </p>
               <div className="pt-4 flex justify-center lg:justify-start gap-4">
                 <Link 
@@ -294,11 +294,11 @@ const Hero = () => {
                   About the Doctor
                 </h4>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#222] leading-tight mb-6">
-                  LION. Dr. R. Swaminathan And Dr.R.swaminathan<br />
+                  LION. Dr. R. srividhya And Dr.R.swaminathan<br />
                   <span className="text-[#f97316] text-2xl lg:text-3xl block mt-2">B.Sc., B.A.M.S., PGDYT., D.Pharm., C.C.H., LL.B.</span>
                 </h2>
                 <p className="text-gray-600 text-lg leading-relaxed">
-                  With a unique and extensive educational background spanning multiple disciplines of health and law, Dr. Swaminathan provides a truly integrative approach to patient care. At MM Clinic, we treat the whole person, addressing the root causes of illness through diverse medical knowledge.
+                  With a unique and extensive educational background spanning multiple disciplines of health and law, Dr. srividhya and swaminathan provides a truly integrative approach to patient care. At MM Clinic, we treat the whole person, addressing the root causes of illness through diverse medical knowledge.
                 </p>
               </div>
 
