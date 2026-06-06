@@ -122,13 +122,13 @@ const Footer = () => {
           <div className="flex items-center gap-2">
              <span className="text-xs text-teal-100/50">Designed by</span>
              <a href="https://wakeupsolution.in" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity flex items-center gap-2">
-               <Image 
-                 src="/wakeup.png" 
-                 alt="WakeUp Solution Logo" 
-                 width={100} 
-                 height={30} 
-                 className="h-6 w-auto object-contain brightness-0 invert opacity-80 hover:opacity-100 transition-opacity" 
-               />
+               <Image
+  src="/wakeup.png"
+  alt="WakeUp Solution Logo"
+  width={100}
+  height={30}
+  className="h-6 w-auto object-contain"
+/>
              </a>
           </div>
         </div>
