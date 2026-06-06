@@ -523,8 +523,113 @@ const Hero = () => {
           </div>
         </div>
       </section>
+            {/* SECTION 4: SPECIALIZED TREATMENT */}
+      <section 
+        aria-labelledby="specialized-treatment-heading" 
+        className="relative py-24 bg-white overflow-hidden font-sans perspective-container"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          
+          {/* Section Header with Line Decoration */}
+          <div 
+            className={`text-center mb-16 relative flex items-center justify-center st-hidden ${isVisible ? 'st-fade-in-up' : ''}`} 
+            style={{ animationDelay: '0.1s' }}
+          >
+            <div className="flex-grow border-t-2 border-gray-200 max-w-[100px] sm:max-w-[200px]"></div>
+            <h2 
+              className="mx-6 text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900 uppercase" 
+              id="specialized-treatment-heading"
+            >
+              Specialized Treatment For
+            </h2>
+            <div className="flex-grow border-t-2 border-gray-200 max-w-[100px] sm:max-w-[200px]"></div>
+          </div>
 
-      {/* SECTION 4: CORE MODULES (CLINIC CAPABILITIES) */}
+          {/* Treatment Categories Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 perspective-container">
+            
+            {/* Card 1: Piles */}
+            <article 
+              className={`bg-white rounded-xl shadow-lg overflow-hidden hover-3d-card st-hidden relative border border-gray-100 flex flex-col ${isVisible ? 'st-fade-in-up' : ''}`} 
+              style={{ animationDelay: '0.2s' }}
+            >
+              {/* Banner */}
+              <div className="bg-[#8b0000] text-white py-5 px-6 flex items-center justify-between relative overflow-visible rounded-t-xl z-10">
+                <h3 className="text-2xl font-black uppercase tracking-wider z-20">Piles</h3>
+                {/* Circular Illustration Placeholder */}
+                <div className="absolute right-[-10px] top-1/2 transform -translate-y-1/2 w-20 h-20 bg-red-50 rounded-full border-4 border-white shadow-inner flex items-center justify-center overflow-hidden z-20">
+                  <span className="text-red-600 text-[10px] font-bold text-center leading-tight p-1">Medical<br/>Diagram</span>
+                </div>
+              </div>
+              {/* Symptoms */}
+              <div className="p-6 pt-10 flex-grow flex items-center justify-center text-center bg-white rounded-b-xl relative z-0 mt-[-10px]">
+                <p className="text-gray-600 font-medium leading-relaxed">Bleeding, Pain,<br/>Swelling &amp; Discomfort</p>
+              </div>
+            </article>
+
+            {/* Card 2: Fissure */}
+            <article 
+              className={`bg-white rounded-xl shadow-lg overflow-hidden hover-3d-card st-hidden relative border border-gray-100 flex flex-col ${isVisible ? 'st-fade-in-up' : ''}`} 
+              style={{ animationDelay: '0.3s' }}
+            >
+              {/* Banner */}
+              <div className="bg-[#001f3f] text-white py-5 px-6 flex items-center justify-between relative overflow-visible rounded-t-xl z-10">
+                <h3 className="text-2xl font-black uppercase tracking-wider z-20">Fissure</h3>
+                {/* Circular Illustration Placeholder */}
+                <div className="absolute right-[-10px] top-1/2 transform -translate-y-1/2 w-20 h-20 bg-blue-50 rounded-full border-4 border-white shadow-inner flex items-center justify-center overflow-hidden z-20">
+                  <span className="text-blue-600 text-[10px] font-bold text-center leading-tight p-1">Medical<br/>Diagram</span>
+                </div>
+              </div>
+              {/* Symptoms */}
+              <div className="p-6 pt-10 flex-grow flex items-center justify-center text-center bg-white rounded-b-xl relative z-0 mt-[-10px]">
+                <p className="text-gray-600 font-medium leading-relaxed">Pain during<br/>Bowel Movement</p>
+              </div>
+            </article>
+
+            {/* Card 3: Fistula */}
+            <article 
+              className={`bg-white rounded-xl shadow-lg overflow-hidden hover-3d-card st-hidden relative border border-gray-100 flex flex-col ${isVisible ? 'st-fade-in-up' : ''}`} 
+              style={{ animationDelay: '0.4s' }}
+            >
+              {/* Banner */}
+              <div className="bg-[#004d00] text-white py-5 px-6 flex items-center justify-between relative overflow-visible rounded-t-xl z-10">
+                <h3 className="text-2xl font-black uppercase tracking-wider z-20">Fistula</h3>
+                {/* Circular Illustration Placeholder */}
+                <div className="absolute right-[-10px] top-1/2 transform -translate-y-1/2 w-20 h-20 bg-green-50 rounded-full border-4 border-white shadow-inner flex items-center justify-center overflow-hidden z-20">
+                  <span className="text-green-600 text-[10px] font-bold text-center leading-tight p-1">Medical<br/>Diagram</span>
+                </div>
+              </div>
+              {/* Symptoms */}
+              <div className="p-6 pt-10 flex-grow flex items-center justify-center text-center bg-white rounded-b-xl relative z-0 mt-[-10px]">
+                <p className="text-gray-600 font-medium leading-relaxed">Discharge, Pain<br/>&amp; Recurrent Infection</p>
+              </div>
+            </article>
+
+            {/* Card 4: Anal Rectum */}
+            <article 
+              className={`bg-white rounded-xl shadow-lg overflow-hidden hover-3d-card st-hidden relative border border-gray-100 flex flex-col ${isVisible ? 'st-fade-in-up' : ''}`} 
+              style={{ animationDelay: '0.5s' }}
+            >
+              {/* Banner */}
+              <div className="bg-[#4a0e4e] text-white py-5 px-6 flex items-center justify-between relative overflow-visible rounded-t-xl z-10">
+                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-wider z-20 leading-tight">Anal<br/>Rectum</h3>
+                {/* Circular Illustration Placeholder */}
+                <div className="absolute right-[-10px] top-1/2 transform -translate-y-1/2 w-20 h-20 bg-purple-50 rounded-full border-4 border-white shadow-inner flex items-center justify-center overflow-hidden z-20">
+                  <span className="text-purple-600 text-[10px] font-bold text-center leading-tight p-1">Medical<br/>Diagram</span>
+                </div>
+              </div>
+              {/* Symptoms */}
+              <div className="p-6 pt-10 flex-grow flex items-center justify-center text-center bg-white rounded-b-xl relative z-0 mt-[-10px]">
+                <p className="text-gray-600 font-medium leading-relaxed">All types of Anal<br/>&amp; Rectal Problems</p>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+
+      {/* SECTION 5: CORE MODULES (CLINIC CAPABILITIES) */}
       <section className="relative py-24 lg:py-32 bg-[#f4fbfb] overflow-hidden font-sans perspective-container">
         {/* Dynamic Medical Animated Background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none preserve-3d">
@@ -650,8 +755,102 @@ const Hero = () => {
           </div>
         </div>
       </section>
+ {/* SECTION 6: CLINIC HOURS & APPOINTMENTS */}
+      <section className="relative py-24 lg:py-32 bg-white overflow-hidden font-sans perspective-container">
+        {/* Background Decorative Elements */}
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-teal-50/50 skew-x-12 translate-x-20 z-0"></div>
+        <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-orange-50 rounded-full blur-3xl z-0"></div>
 
-      {/* SECTION 5: CONTACT INFORMATION */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            {/* LEFT SIDE: Text & Context */}
+            <div className="flex flex-col space-y-6 preserve-3d">
+              <h4 className="text-[#0d9488] font-bold text-sm uppercase tracking-widest">
+                Plan Your Visit
+              </h4>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#222] leading-tight">
+                Dedicated Time for <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#14b8a6] to-[#0d9488]">Your Health & Healing</span>
+              </h2>
+              <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
+                We value your time. Whether you need a routine checkup, alternative therapy consultation, or prescription guidance, our flexible hours ensure you get the care you need, when you need it. Walk-ins are welcome, but booking an appointment guarantees zero wait time.
+              </p>
+              
+              <ul className="space-y-4 pt-4">
+                <li className="flex items-center gap-3 text-gray-700">
+                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-[#0d9488]">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                  Minimal Waiting Times
+                </li>
+                <li className="flex items-center gap-3 text-gray-700">
+                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-[#0d9488]">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                  Emergency Priority Care
+                </li>
+                <li className="flex items-center gap-3 text-gray-700">
+                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-[#0d9488]">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                  In-House Pharmacy Access
+                </li>
+              </ul>
+            </div>
+
+            {/* RIGHT SIDE: 3D Timing Card */}
+            <div className="perspective-container relative w-full flex justify-center lg:justify-end">
+              <div className="w-full max-w-md bg-gradient-to-br from-[#0f766e] to-[#0d9488] rounded-[2rem] p-8 lg:p-10 shadow-[0_20px_50px_rgba(13,148,136,0.3)] border border-teal-500 card-3d-hover relative overflow-hidden text-white">
+                
+                {/* Internal Glow/Accent */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 blur-2xl rounded-full transform translate-x-10 -translate-y-10"></div>
+                
+                <div className="pop-out-3d relative z-10">
+                  <div className="flex items-center justify-between mb-8 pb-6 border-b border-white/20">
+                    <h3 className="text-2xl font-bold tracking-wide">Clinic Hours</h3>
+                    <svg className="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+
+                  <div className="space-y-5">
+                    <div className="flex justify-between items-center group">
+                      <span className="text-white/80 font-medium group-hover:text-white transition-colors">Monday - Friday</span>
+                      <span className="font-bold text-lg bg-white/10 px-4 py-1 rounded-lg backdrop-blur-sm">9:00 AM - 8:30 PM</span>
+                    </div>
+                    <div className="flex justify-between items-center group">
+                      <span className="text-white/80 font-medium group-hover:text-white transition-colors">Saturday</span>
+                      <span className="font-bold text-lg bg-white/10 px-4 py-1 rounded-lg backdrop-blur-sm">9:00 AM - 6:00 PM</span>
+                    </div>
+                    <div className="flex justify-between items-center group">
+                      <span className="text-white/80 font-medium group-hover:text-white transition-colors">Sunday</span>
+                      <span className="font-bold text-lg text-orange-300 bg-orange-400/10 px-4 py-1 rounded-lg backdrop-blur-sm border border-orange-400/20">10:00 AM - 1:00 PM</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-10 pt-6 border-t border-white/20">
+                    <div className="bg-[#f97316] rounded-xl p-5 shadow-lg transform transition-transform hover:scale-105 duration-300">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-sm uppercase tracking-wider font-bold text-orange-100">Need Immediate Care?</span>
+                        <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                      </div>
+                      <a href="tel:+919444796479" className="text-xl font-black text-white hover:text-orange-100 transition-colors block">
+                        Call +91 94447 96479
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      {/* SECTION 7: CONTACT INFORMATION */}
       <section className="relative py-24 lg:py-32 bg-white overflow-hidden font-sans perspective-container">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
